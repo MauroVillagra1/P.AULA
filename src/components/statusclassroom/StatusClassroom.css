@@ -1,0 +1,63 @@
+.status-classroom-conteiner{
+    width: 40vw;
+    max-width: 400px;
+    height: 40vw;
+    max-height: 400px;
+    flex-direction: column;
+    display: flex;
+    
+}
+
+.status-clasroom-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0c649d;
+    background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(0, 0, 0, 1) 100%, rgba(237, 221, 83, 1) 100%);
+    padding-left: 10px;
+
+}
+
+.status-clasroom-title h3{
+    color: white;
+    font-weight: bold;
+}
+
+
+.status-clasroom-title button{
+    height: 50px;
+    width: 50px;
+    background-color: red;
+}
+
+.status-classroom-body{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    font-size: 20px;
+    background-color: #cecece;
+    flex-direction: column;
+    font-weight: bold;
+
+}
+
+.status-classroom-body ul{
+    list-style: none;
+    padding: 10px;
+    text-align: left;
+}
+.status-classroom-body ul li span{
+   color: rgb(0, 38, 255);
+   font-weight: bold;
+}
+
+.status-classroom-buttons{
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 10px;
+}
+
+.status-classroom-buttons button{
+    width: 120px;
+    height: 50px;
+}
