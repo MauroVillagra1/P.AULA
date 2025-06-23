@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  opacity: 90%;
 }
 
 /* Contenedor del pop-up */

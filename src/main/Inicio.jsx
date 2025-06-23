@@ -2,36 +2,71 @@ import React, { useState, useEffect } from 'react';
 import './Inicio.css';
 import { Button } from 'react-bootstrap';
 import StatusClassroom from '../components/statusclassroom/StatusClassroom'; // Asegúrate de importar StatusClassroom
+import Navbar from '../cummon/Navbar';
+function Main({ classrooms, busqueda, selectedClassroom, setSelectedClassroom, setShowPopup, showPopup, closePopup, pisoActual, highlightedAulaId }) {
 
-function Main() {
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [selectedClassroom, setSelectedClassroom] = useState(null); // Estado para el aula seleccionada
-  const [showPopup, setShowPopup] = useState(false); // Estado para controlar la visibilidad del pop-up
 
-  const classrooms = [
-    {
-      name: 'Aula 112',
-      status: 'Disponible',
-      subject: 'Matematica Discreta',
-      commission: '1K6',
-      teacher: 'Monica de la Orden',
-      schedule: '2:30-4:30',
-    },
-    {
-      name: 'Aula 113',
-      status: 'Ocupado',
-      subject: 'Física I',
-      commission: '2A1',
-      teacher: 'Juan Pérez',
-      schedule: '9:00-11:00',
-    }
-  ];
+ const imagenesPorPiso = {
+  "Subsuelo": "URL_SUBSUELO",
+  "Planta Baja": "https://res-console.cloudinary.com/dpoin30pf/thumbnails/v1/image/upload/v1750643192/R0VTVE9SX0RFX0FVTEFTX1VUTl9GUlRfNV91ZXhjeDU=/drilldown",
+  "Piso 1": "https://res-console.cloudinary.com/dpoin30pf/thumbnails/v1/image/upload/v1750644162/R0VTVE9SX0RFX0FVTEFTX1VUTl9GUlRfNl9xdW1yd2U=/drilldown",
+  "Piso 2": "URL_PISO_2"
+};
+const areasPorPiso = {
+  "Planta Baja": [
+    { id: 'Aula 158', coords: { x1: 3, y1: 17, x2: 12, y2: 27 }, label: 'Aula 158' },
+    { id: 'Aula 156', coords: { x1: 3, y1: 32, x2: 12, y2: 47 }, label: 'Aula 156' },
+    { id: 'Aula 154', coords: { x1: 3, y1: 51, x2: 12, y2: 65 }, label: 'Aula 154' },
+    { id: 'Laboratorio1', coords: { x1: 2, y1: 69, x2: 13, y2: 79 }, label: 'Laboratorio' },
+    { id: 'Aula 159', coords: { x1: 24, y1: 2, x2: 32, y2: 12 }, label: 'Aula 159' },
+    { id: 'Aula 157', coords: { x1: 24, y1: 15, x2: 32, y2: 27 }, label: 'Aula 157' },
+    { id: 'Aula 155', coords: { x1: 24, y1: 32, x2: 32, y2: 44 }, label: 'Aula 155' },
+    { id: 'Aula 153', coords: { x1: 24, y1: 50, x2: 32, y2: 64 }, label: 'Aula 153' },
+    { id: 'Laboratorio2', coords: { x1: 23.4, y1: 70, x2: 32.7, y2: 86 }, label: 'Laboratorio' },
+    { id: 'Aula 118', coords: { x1: 66, y1: 38, x2: 79, y2: 47 }, label: 'Aula 118' },
+    { id: 'Aula 116', coords: { x1: 66, y1: 50, x2: 79, y2: 58 }, label: 'Aula 116' },
+    { id: 'Aula 114', coords: { x1: 66, y1: 61, x2: 79, y2: 70 }, label: 'Aula 114' },
+    { id: 'Aula 112', coords: { x1: 66, y1: 72, x2: 79, y2: 81 }, label: 'Aula 112' },
+    { id: 'Aula 115', coords: { x1: 95, y1: 63, x2: 113, y2: 71 }, label: 'Aula 115' },
+    { id: 'Aula 117', coords: { x1: 95, y1: 52, x2: 113, y2: 61 }, label: 'Aula 117' },
+    { id: 'Aula 119', coords: { x1: 95, y1: 40, x2: 113, y2: 49 }, label: 'Aula 119' },
+    { id: 'Aula 121', coords: { x1: 95, y1: 26, x2: 113, y2: 37 }, label: 'Aula 121' },
 
-  const areas = [
-    { id: 'Aula 112', coords: { x1: 3, y1: 5, x2: 12, y2: 15 }, label: 'Aula 112' },
-    { id: 'Aula 113', coords: { x1: 3, y1: 23, x2: 12, y2: 33 }, label: 'Aula 113' },
-  ];
+
+
+
+
+  ],
+  "Piso 1": [
+    { id: 'Aula 108', coords: { x1: 3, y1: 5, x2: 12, y2: 15 }, label: 'Aula 108' },
+    { id: 'Aula 113', coords: { x1: 3, y1: 25, x2: 12, y2: 35 }, label: 'Aula 113' },
+    { id: 'Aula 104', coords: { x1: 3, y1: 43, x2: 12, y2: 53 }, label: 'Aula 104' },
+    { id: 'Aula 102', coords: { x1: 3, y1: 62, x2: 12, y2: 72 }, label: 'Aula 102' },
+    { id: 'Aula 107', coords: { x1: 24, y1: 5, x2: 32, y2: 15 }, label: 'Aula 107' },
+    { id: 'Aula 105', coords: { x1: 24, y1: 29, x2: 32, y2: 39 }, label: 'Aula 105' },
+    { id: 'Aula 103', coords: { x1: 24, y1: 52, x2: 32, y2: 62 }, label: 'Aula 103' },
+    { id: 'Aula 101', coords: { x1: 24, y1: 70, x2: 32, y2: 80 }, label: 'Aula 101' },
+    { id: 'Aula 218', coords: { x1: 68, y1: 42, x2: 77, y2: 50 }, label: 'Aula 218' },
+    { id: 'Aula 216', coords: { x1: 68, y1: 53, x2: 77, y2: 61 }, label: 'Aula 216' },
+    { id: 'Aula 214', coords: { x1: 68, y1: 64, x2: 77, y2: 72 }, label: 'Aula 214' },
+    { id: 'Aula 212', coords: { x1: 68, y1: 75, x2: 77, y2: 83 }, label: 'Aula 212' },
+    { id: 'Aula 221', coords: { x1: 100, y1: 26, x2: 109, y2: 37 }, label: 'Aula 221' },
+    { id: 'Aula 219', coords: { x1: 100, y1: 39, x2: 109, y2: 49 }, label: 'Aula 219' },
+    { id: 'Aula 217', coords: { x1: 100, y1: 52, x2: 109, y2: 61 }, label: 'Aula 217' },
+    { id: 'Aula 215', coords: { x1: 100, y1: 63, x2: 109, y2: 71 }, label: 'Aula 215' }
+  ],
+  "Subsuelo": [
+    { id: 'Laboratorio 1', coords: { x1: 5, y1: 5, x2: 15, y2: 15 }, label: 'Lab 1' }
+  ],
+  // etc.
+};
+
+ const areas = areasPorPiso[pisoActual] || [];
+ const imagenActual = imagenesPorPiso[pisoActual];
+
+
 
   const handleImageLoad = (e) => {
     setImageDimensions({
@@ -39,6 +74,7 @@ function Main() {
       height: e.target.height,
     });
   };
+<Navbar aulas={classrooms} />
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -70,65 +106,64 @@ function Main() {
     return classroom ? (classroom.status === 'Ocupado' ? 'danger' : 'success') : 'secondary';
   };
 
-  const handleClick = (aulaId) => {
-    // Buscar el aula correspondiente en el array classrooms
-    const classroom = classrooms.find(classroom => classroom.name === aulaId);
-    setSelectedClassroom(classroom); // Establecer el aula seleccionada
-    setShowPopup(true); // Mostrar el pop-up
-  };
+const handleClick = (aulaId) => {
+  const classroom = classrooms.find(classroom => classroom.name === aulaId);
+  setSelectedClassroom(classroom);
+  setShowPopup(true);
 
-  const closePopup = () => {
-    setShowPopup(false); // Cerrar el pop-up
-  };
+  // Efecto de resaltar temporalmente
+   // Quitar resaltado tras 1.5 segundos
+};
+  
 
   return (
+    
     <div className="content-main">
-      <img
-        src="https://res.cloudinary.com/dpoin30pf/image/upload/v1747171654/GESTOR_DE_AULAS_UTN_FRT_jaaffo.png"
-        alt="Mapa aulas"
-        onLoad={handleImageLoad}
-        useMap="#mapaAulas"
-      />
-
+     <img
+  src={imagenActual}
+  alt={`Mapa ${pisoActual}`}
+  onLoad={handleImageLoad}
+  useMap="#mapaAulas"
+/>
       <map name="mapaAulas">
-        {areas.map((area, index) => {
-          const { x1, y1, x2, y2 } = getAbsoluteCoordinates(area.coords);
-          return (
-            <area
-              key={index}
-              shape="rect"
-              coords={`${x1},${y1},${x2},${y2}`}
-              href="#"
-              alt={area.label}
-              onClick={() => handleClick(area.id)}
-            />
-          );
-        })}
-      </map>
+  {areas.map((area, index) => {
+    const { x1, y1, x2, y2 } = getAbsoluteCoordinates(area.coords);
+    return (
+      <area
+        key={index}
+        shape="rect"
+        coords={`${x1},${y1},${x2},${y2}`}
+        href="#"
+        alt={area.label}
+        onClick={() => handleClick(area.id)}
+      />
+    );
+  })}
+</map>
 
-      {/* Renderizamos los botones */}
-      {areas.map((area, index) => {
-        const { x1, y1, x2, y2 } = getAbsoluteCoordinates(area.coords);
-        return (
-          <Button
-            className="Button-main-map"
-            key={index}
-            variant={getButtonColor(area.id)}
-            style={{
-              position: 'absolute',
-              left: `${x1}px`,
-              top: `${y1}px`,
-              width: `${x2 - x1}px`,
-              height: `${y2 - y1}px`,
-            }}
-            onClick={() => handleClick(area.id)}
-          >
-            {area.label}
-          </Button>
-        );
-      })}
+      
+    {areas.map((area, index) => {
+  const { x1, y1, x2, y2 } = getAbsoluteCoordinates(area.coords);
+  return (
+<Button
+  className={`Button-main-map ${highlightedAulaId === area.id ? "button-highlight" : ""}`}
+  key={index}
+  variant={getButtonColor(area.id)}
+  style={{
+    position: 'absolute',
+    left: `${x1}px`,
+    top: `${y1}px`,
+    width: `${x2 - x1}px`,
+    height: `${y2 - y1}px`,
+  }}
+  onClick={() => handleClick(area.id)}
+>
+  {area.label}
+</Button>
+  );
+})}
   
-      {/* Mostrar el pop-up con la información del aula si showPopup es true */}
+      
       {showPopup && selectedClassroom && (
         <div className="status-classroom-overlay">
         <StatusClassroom classroom={selectedClassroom} closePopup={closePopup} />
@@ -137,6 +172,7 @@ function Main() {
     </div>
    
   );
+  
 }
 
 export default Main;
