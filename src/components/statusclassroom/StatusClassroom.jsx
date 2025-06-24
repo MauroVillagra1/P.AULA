@@ -19,8 +19,8 @@ function StatusClassroom({ classroom, closePopup }) {
           <li>-</li>
         </ul>
         <div className='status-classroom-buttons'>
-          <Button variant="danger">Desocupar</Button>
-          <Button variant="warning">Modificar</Button>
+         {/* <Button variant="danger">Desocupar</Button>
+          <Button variant="warning">Modificar</Button> */}
         </div>
       </div>
     </div>

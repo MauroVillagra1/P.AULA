@@ -9,10 +9,10 @@ function Main({ classrooms, busqueda, selectedClassroom, setSelectedClassroom, s
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
  const imagenesPorPiso = {
-  "Subsuelo": "URL_SUBSUELO",
+  "Subsuelo": "https://res.cloudinary.com/dnibad7yk/image/upload/v1750794347/GESTOR_DE_AULAS_UTN_FRT_m4fvu2.png",
   "Planta Baja": "https://res.cloudinary.com/dnibad7yk/image/upload/v1750791969/PLANTA_BAJA_mlns0q.png",
   "Piso 1": "https://res.cloudinary.com/dnibad7yk/image/upload/v1750792496/PRIMER_PISO_hjd1vl.png",
-  "Piso 2": "URL_PISO_2"
+  "Piso 2": "https://res.cloudinary.com/dnibad7yk/image/upload/v1750795260/GESTOR_DE_AULAS_UTN_FRT_1_e1eo1v.png"
 };
 const areasPorPiso = {
   "Planta Baja": [
@@ -25,14 +25,14 @@ const areasPorPiso = {
     { id: 'Aula 155', coords: { x1: 24, y1: 32, x2: 32, y2: 44 }, label: 'Aula 155' },
     { id: 'Aula 153', coords: { x1: 24, y1: 50, x2: 32, y2: 64 }, label: 'Aula 153' },
     { id: 'Laboratorio2', coords: { x1: 23.4, y1: 70, x2: 32.7, y2: 86 }, label: 'Laboratorio' },
-    { id: 'Aula 118', coords: { x1: 66, y1: 38, x2: 79, y2: 47 }, label: 'Aula 118' },
-    { id: 'Aula 116', coords: { x1: 66, y1: 50, x2: 79, y2: 58 }, label: 'Aula 116' },
-    { id: 'Aula 114', coords: { x1: 66, y1: 61, x2: 79, y2: 70 }, label: 'Aula 114' },
-    { id: 'Aula 112', coords: { x1: 66, y1: 72, x2: 79, y2: 81 }, label: 'Aula 112' },
-    { id: 'Aula 115', coords: { x1: 95, y1: 63, x2: 113, y2: 71 }, label: 'Aula 115' },
-    { id: 'Aula 117', coords: { x1: 95, y1: 52, x2: 113, y2: 61 }, label: 'Aula 117' },
-    { id: 'Aula 119', coords: { x1: 95, y1: 40, x2: 113, y2: 49 }, label: 'Aula 119' },
-    { id: 'Aula 121', coords: { x1: 95, y1: 26, x2: 113, y2: 37 }, label: 'Aula 121' },
+    { id: 'Aula 118', coords: { x1: 68, y1: 38, x2: 79, y2: 47 }, label: 'Aula 118' },
+    { id: 'Aula 116', coords: { x1: 68, y1: 50, x2: 79, y2: 58 }, label: 'Aula 116' },
+    { id: 'Aula 114', coords: { x1: 68, y1: 62, x2: 79, y2: 70 }, label: 'Aula 114' },
+    { id: 'Aula 112', coords: { x1: 68, y1: 73, x2: 79, y2: 81 }, label: 'Aula 112' },
+    { id: 'Aula 115', coords: { x1: 96, y1: 64, x2: 114, y2: 72 }, label: 'Aula 115' },
+    { id: 'Aula 117', coords: { x1: 96, y1: 53, x2: 114, y2: 62 }, label: 'Aula 117' },
+    { id: 'Aula 119', coords: { x1: 96, y1: 40, x2: 114, y2: 50 }, label: 'Aula 119' },
+    { id: 'Aula 121', coords: { x1: 96, y1: 26, x2: 114, y2: 37 }, label: 'Aula 121' },
 
 
 
@@ -40,25 +40,24 @@ const areasPorPiso = {
 
   ],
   "Piso 1": [
-    { id: 'Aula 108', coords: { x1: 3, y1: 5, x2: 12, y2: 15 }, label: 'Aula 108' },
-    { id: 'Aula 113', coords: { x1: 3, y1: 25, x2: 12, y2: 35 }, label: 'Aula 113' },
-    { id: 'Aula 104', coords: { x1: 3, y1: 43, x2: 12, y2: 53 }, label: 'Aula 104' },
-    { id: 'Aula 102', coords: { x1: 3, y1: 62, x2: 12, y2: 72 }, label: 'Aula 102' },
-    { id: 'Aula 107', coords: { x1: 24, y1: 5, x2: 32, y2: 15 }, label: 'Aula 107' },
-    { id: 'Aula 105', coords: { x1: 24, y1: 29, x2: 32, y2: 39 }, label: 'Aula 105' },
-    { id: 'Aula 103', coords: { x1: 24, y1: 52, x2: 32, y2: 62 }, label: 'Aula 103' },
-    { id: 'Aula 101', coords: { x1: 24, y1: 70, x2: 32, y2: 80 }, label: 'Aula 101' },
-    { id: 'Aula 218', coords: { x1: 68, y1: 42, x2: 77, y2: 50 }, label: 'Aula 218' },
-    { id: 'Aula 216', coords: { x1: 68, y1: 53, x2: 77, y2: 61 }, label: 'Aula 216' },
-    { id: 'Aula 214', coords: { x1: 68, y1: 64, x2: 77, y2: 72 }, label: 'Aula 214' },
-    { id: 'Aula 212', coords: { x1: 68, y1: 75, x2: 77, y2: 83 }, label: 'Aula 212' },
-    { id: 'Aula 221', coords: { x1: 100, y1: 26, x2: 109, y2: 37 }, label: 'Aula 221' },
-    { id: 'Aula 219', coords: { x1: 100, y1: 39, x2: 109, y2: 49 }, label: 'Aula 219' },
-    { id: 'Aula 217', coords: { x1: 100, y1: 52, x2: 109, y2: 61 }, label: 'Aula 217' },
-    { id: 'Aula 215', coords: { x1: 100, y1: 63, x2: 109, y2: 71 }, label: 'Aula 215' }
+    { id: 'Aula 108', coords: { x1: 2, y1: 3, x2: 13, y2: 19 }, label: 'Aula 108' },
+    { id: 'Aula 113', coords: { x1: 2, y1: 24, x2: 13, y2: 37 }, label: 'Aula 113' },
+    { id: 'Aula 104', coords: { x1: 2, y1: 41, x2: 13, y2: 56 }, label: 'Aula 104' },
+    { id: 'Aula 102', coords: { x1: 2, y1: 61, x2: 13, y2: 74 }, label: 'Aula 102' },
+    { id: 'Aula 107', coords: { x1: 24, y1: 2, x2: 32, y2: 19 }, label: 'Aula 107' },
+    { id: 'Aula 105', coords: { x1: 24, y1: 24, x2: 32, y2: 45 }, label: 'Aula 105' },
+    { id: 'Aula 103', coords: { x1: 24, y1: 49, x2: 32, y2: 66 }, label: 'Aula 103' },
+    { id: 'Aula 101', coords: { x1: 24, y1: 69, x2: 32, y2: 84 }, label: 'Aula 101' },
+    { id: 'Aula 218', coords: { x1: 68, y1: 42, x2: 79, y2: 50 }, label: 'Aula 218' },
+    { id: 'Aula 216', coords: { x1: 68, y1: 53, x2: 79, y2: 61 }, label: 'Aula 216' },
+    { id: 'Aula 214', coords: { x1: 68, y1: 64, x2: 79, y2: 73 }, label: 'Aula 214' },
+    { id: 'Aula 212', coords: { x1: 68, y1: 75, x2: 79, y2: 84 }, label: 'Aula 212' },
+    { id: 'Aula 221', coords: { x1: 96, y1: 26, x2: 115, y2: 37 }, label: 'Aula 221' },
+    { id: 'Aula 219', coords: { x1: 96, y1: 41, x2: 115, y2: 50 }, label: 'Aula 219' },
+    { id: 'Aula 217', coords: { x1: 96, y1: 53, x2: 115, y2: 62 }, label: 'Aula 217' },
+    { id: 'Aula 215', coords: { x1: 96, y1: 65, x2: 115, y2: 72 }, label: 'Aula 215' }
   ],
   "Subsuelo": [
-    { id: 'Laboratorio 1', coords: { x1: 5, y1: 5, x2: 15, y2: 15 }, label: 'Lab 1' }
   ],
   // etc.
 };
