@@ -10,7 +10,7 @@ function Main({ classrooms, busqueda, selectedClassroom, setSelectedClassroom, s
 
  const imagenesPorPiso = {
   "Subsuelo": "URL_SUBSUELO",
-  "Planta Baja": "https://res-console.cloudinary.com/dpoin30pf/thumbnails/v1/image/upload/v1750643192/R0VTVE9SX0RFX0FVTEFTX1VUTl9GUlRfNV91ZXhjeDU=/drilldown",
+  "Planta Baja": "https://res.cloudinary.com/dnibad7yk/image/upload/v1750791969/PLANTA_BAJA_mlns0q.png",
   "Piso 1": "https://res-console.cloudinary.com/dpoin30pf/thumbnails/v1/image/upload/v1750644162/R0VTVE9SX0RFX0FVTEFTX1VUTl9GUlRfNl9xdW1yd2U=/drilldown",
   "Piso 2": "URL_PISO_2"
 };
