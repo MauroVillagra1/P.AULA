@@ -127,7 +127,6 @@ const areasPorPiso = {
                   top: `${y1}px`,
                   width: `${x2 - x1}px`,
                   height: `${y2 - y1}px`,
-                  fontSize: 'calc(0.5vw + 6px)',
                 }}
                 onClick={() => handleClick(area.id)}
               >

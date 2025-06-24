@@ -1,9 +1,9 @@
 .content-main {
-    margin: 50px;
+  margin: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative; 
+  position: relative;
   box-sizing: border-box;
 }
 
@@ -15,7 +15,11 @@
 
 .aula-button {
   position: absolute;
-  z-index: 10; /* Asegura que los botones estén por encima de la imagen */
+  z-index: 10;
+  font-size: 10px; /* Tamaño base */
+  padding: 4px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .button-aulas {
@@ -25,27 +29,33 @@
 }
 
 .button-highlight {
-  animation: highlightFlash 1.5s ease-in-out;
-  border: 3px solid gold !important;
-  box-shadow: 0 0 15px gold;
+  animation: blink 1.5s ease-in-out;
+  border: 3px solid #ffc107 !important;
+  box-shadow: 0 0 10px #ffc107;
 }
 
-@keyframes highlightFlash {
+@keyframes blink {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
 
-
-.button-highlight {
-  animation: blink 1.5s ease-in-out;
-  border: 3px solid #ffc107 !important; /* amarillo */
-  box-shadow: 0 0 10px #ffc107;
+/* ✅ Media query para pantallas pequeñas */
+@media (max-width: 1200px) {
+.Button-main-map {
+  font-size: 8px; /* Ajuste dinámico basado en el tamaño de la ventana */
+}
 }
 
+@media (max-width: 860px) {
+.Button-main-map {
+  font-size: 5px; /* Ajuste dinámico basado en el tamaño de la ventana */
+}
+}
 
-@media (max-width: 768px) {
-    .Button-main-map{
-    font-size: 10px;
+@media (max-width: 450px) {
+.Button-main-map {
+  font-size: 3px; /* Ajuste dinámico basado en el tamaño de la ventana */
+  padding: 0 !important;
 }
 }
