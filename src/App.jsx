@@ -26,7 +26,7 @@ const [highlightedAulaId, setHighlightedAulaId] = useState(null);
           const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
       const diaActual = diasSemana[new Date().getDay()];
 
-      const res = await axios.get(`http://localhost:4000/api/clase/dia?dia=${diaActual}`);
+      const res = await axios.get(`https://p-aula-back-29ln.vercel.app/api/clase/dia?dia=${diaActual}`);
         setClassrooms(res.data);
         console.log(res.data)
       } catch (err) {
