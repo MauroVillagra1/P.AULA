@@ -5,6 +5,7 @@ import './Navbar.css';
 function Navbar({ aulas, onBusquedaChange, onAulaSelect, setPisoActual, pisoActual, setHighlightedAulaId }) {
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
+const horaActual = new Date().toTimeString().slice(0, 5); // formato "HH:MM"
 
   const handleChange = (e) => {
     const texto = e.target.value;
@@ -17,28 +18,36 @@ function Navbar({ aulas, onBusquedaChange, onAulaSelect, setPisoActual, pisoActu
     }
 
     const filtro = texto.toLowerCase();
-   const filtrados = aulas.filter((aula) =>
-  aula.name.toLowerCase().includes(filtro) ||
-  aula.subject.toLowerCase().includes(filtro) ||
-  aula.teacher.toLowerCase().includes(filtro)
-).slice(0, 5);
+   const filtrados = aulas.filter((aula) => {
+  const coincideTexto =
+    aula.aula.nombre.toLowerCase().includes(filtro) ||
+    aula.materia.nombre.toLowerCase().includes(filtro) ||
+    aula.profesor.nombre.toLowerCase().includes(filtro);
+
+  const estaEnHorario =
+    aula.horario_inicio <= horaActual && horaActual < aula.horario_fin;
+
+  return coincideTexto && estaEnHorario;
+}).slice(0, 5);
+
+
 
     setResultados(filtrados);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Podés manejar una acción acá si querés usar enter
+    
   };
 
 const handleSelect = (aula) => {
-  console.log("Seleccionado:", aula);
-  setHighlightedAulaId(aula.name);
+  console.log("Seleccionado:", aula.aula.planta.nombre);
+  setHighlightedAulaId(aula.aula.nombre);
   setTimeout(() => setHighlightedAulaId(null), 5000);
   setBusqueda("");      // Limpiar el input
   setResultados([]);    // Ocultar sugerencias
   onAulaSelect(aula);   // Mostrar popup con info del aula
-  setPisoActual(aula.floor); // Cambiar al piso del aula seleccionada
+setPisoActual(aula.aula.planta.nombre);
 };
 
   const handlePisoClick = (piso) => {
@@ -70,7 +79,7 @@ const handleSelect = (aula) => {
                     action
                     onClick={() => handleSelect(aula)}
                   >
-                    <strong>{aula.name}</strong> - {aula.subject} - {aula.teacher}
+                    <strong>{aula.aula.nombre}</strong> - {aula.materia.nombre} - {aula.profesor.nombre}
                   </ListGroup.Item>
                 ))}
               </ListGroup>

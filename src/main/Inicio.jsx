@@ -4,9 +4,20 @@ import { Button } from 'react-bootstrap';
 import StatusClassroom from '../components/statusclassroom/StatusClassroom';
 import Navbar from '../cummon/Navbar';
 
+
+
 function Main({ classrooms, busqueda, selectedClassroom, setSelectedClassroom, setShowPopup, showPopup, closePopup, pisoActual, highlightedAulaId }) {
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const imageRef = useRef(null);
+const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const horaActual = new Date().toTimeString().slice(0, 5); // "HH:MM"
+
+const [clasesPorAula, setClasesPorAula] = useState({});
+const [clasesDelPopup, setClasesDelPopup] = useState([]);
+const [claseIndex, setClaseIndex] = useState(0);
+
+
+
 
   const imagenesPorPiso = {
     "Subsuelo": "https://res.cloudinary.com/dnibad7yk/image/upload/v1750794347/GESTOR_DE_AULAS_UTN_FRT_m4fvu2.png",
@@ -62,6 +73,10 @@ const areasPorPiso = {
   // etc.
 };
 
+
+
+
+
   const imagenActual = imagenesPorPiso[pisoActual];
   const areas = areasPorPiso[pisoActual] || [];
 
@@ -76,13 +91,36 @@ const areasPorPiso = {
       }
     });
 
+
+
     observer.observe(img);
     return () => observer.disconnect();
   }, []);
 
+
+    useEffect(() => {
+  const agrupadas = {};
+
+  classrooms.forEach(c => {
+    const nombre = c.aula.nombre;
+    if (!agrupadas[nombre]) agrupadas[nombre] = [];
+    agrupadas[nombre].push(c);
+  });
+
+  // Ordenar por horario
+  Object.keys(agrupadas).forEach(aula => {
+    agrupadas[aula] = agrupadas[aula].sort((a, b) => a.horario_inicio.localeCompare(b.horario_inicio));
+  });
+
+  setClasesPorAula(agrupadas);
+}, [classrooms]);
+
   const getAbsoluteCoordinates = (coords) => {
     const { width, height } = imageDimensions;
     const { x1, y1, x2, y2 } = coords;
+    
+    
+   
 
     return {
       x1: (x1 / 100) * width,
@@ -91,17 +129,26 @@ const areasPorPiso = {
       y2: (y2 / 100) * height,
     };
   };
+ const getClaseActual = (aulaId) => {
+  const clases = clasesPorAula[aulaId] || [];
+  return clases.find(c => c.horario_inicio <= horaActual && horaActual < c.horario_fin);
+};
 
-  const getButtonColor = (aulaId) => {
-    const classroom = classrooms.find(c => c.name === aulaId);
-    return classroom ? (classroom.status === 'Ocupado' ? 'danger' : 'success') : 'secondary';
-  };
+ const getButtonColor = (aulaId) => {
+  return getClaseActual(aulaId) ? 'danger' : 'secondary';
+};
 
-  const handleClick = (aulaId) => {
-    const classroom = classrooms.find(c => c.name === aulaId);
-    setSelectedClassroom(classroom);
-    setShowPopup(true);
-  };
+const handleClick = (aulaId) => {
+  const clases = clasesPorAula[aulaId] || [];
+  const indexClaseActual = clases.findIndex(c => c.horario_inicio <= horaActual && horaActual < c.horario_fin);
+
+  if (indexClaseActual === -1) return; // No hay clase activa
+
+  setClaseIndex(indexClaseActual);
+  setClasesDelPopup(clases);
+  setShowPopup(true);
+};
+
 
   return (
     <>
@@ -136,11 +183,17 @@ const areasPorPiso = {
           })}
         </div>
 
-        {showPopup && selectedClassroom && (
-          <div className="status-classroom-overlay">
-            <StatusClassroom classroom={selectedClassroom} closePopup={closePopup} />
-          </div>
-        )}
+    {showPopup && clasesDelPopup.length > 0 && (
+  <div className="status-classroom-overlay">
+    <StatusClassroom
+      clases={clasesDelPopup}
+      currentIndex={claseIndex}
+      setCurrentIndex={setClaseIndex}
+      closePopup={closePopup}
+    />
+  </div>
+)}
+
       </div>
     </>
   );

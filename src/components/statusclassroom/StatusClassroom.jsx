@@ -2,25 +2,38 @@ import React from 'react';
 import "./StatusClassroom.css";
 import Button from 'react-bootstrap/Button';
 
-function StatusClassroom({ classroom, closePopup }) {
+function StatusClassroom({ clases, currentIndex, setCurrentIndex, closePopup }) {
+  const clase = clases[currentIndex];
+  if (!clase) return null;
+
   return (
     <div className='status-classroom-conteiner'>
       <div className='status-clasroom-title'>
-        <h3>Detalles: {classroom.name}</h3>
+        <h3>{clase.aula.nombre}</h3>
         <button onClick={closePopup}>x</button>
       </div>
       <div className='status-classroom-body'>
         <ul>
-          <li>Estado: <span className='status-classroom-tag'>{classroom.status}</span></li>
-          <li>Materia: <span>{classroom.subject}</span></li>
-          <li>Comisión: <span>{classroom.commission}</span></li>
-          <li>Docente: <span>{classroom.teacher}</span></li>
-          <li>Horario: <span>{classroom.schedule}</span></li>
-          <li>-</li>
+          <li>Materia: <span>{clase.materia.nombre}</span></li>
+          <li>Comisión: <span>{clase.comision.numero}</span></li>
+          <li>Docente: <span>{clase.profesor.nombre}</span></li>
+          <li>Horario: <span>{clase.horario_inicio} - {clase.horario_fin}</span></li>
         </ul>
         <div className='status-classroom-buttons'>
-         {/* <Button variant="danger">Desocupar</Button>
-          <Button variant="warning">Modificar</Button> */}
+          <Button
+            variant="secondary"
+            disabled={currentIndex === 0}
+            onClick={() => setCurrentIndex(currentIndex - 1)}
+          >
+            Anterior
+          </Button>
+          <Button
+            variant="secondary"
+            disabled={currentIndex === clases.length - 1}
+            onClick={() => setCurrentIndex(currentIndex + 1)}
+          >
+            Siguiente
+          </Button>
         </div>
       </div>
     </div>
